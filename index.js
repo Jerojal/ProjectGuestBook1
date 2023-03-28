@@ -7,7 +7,7 @@ const port = process.env.PORT || 3000;
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', function (req, res) {
+app.get('https://projectguestbook1jerojal.azurewebsites.net', function (req, res) {
     res.sendFile(__dirname + '/index.html')
 });
 
