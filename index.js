@@ -1,11 +1,13 @@
 
 var express = require('express');
 var fs = require('fs');
+
 var app = express();
 const port = process.env.PORT || 3000;
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("./Project1Guestbook"));
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html')
@@ -54,7 +56,13 @@ app.post('/newmessage', function (req, res) {
 app.get('/ajaxmessage', function (req, res) {
     res.sendFile(__dirname + '/ajaxmessage.html');
 });
+app.post("/sendAjax", function (request, response) {
+    var username = request.body.username;
+    var message = request.body.message;
+    var country = request.body.country;
 
+    response.send("Message sent:  Username:" + username + " message: " + message + " country:" + country + " " + new Date());
+});
 app.get('*', function (req, res) {
     res.send('404');
 });

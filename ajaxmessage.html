@@ -1,36 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
-<title>CandyMan Candyshop</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<Style> 
-  body {
-  background-color: #e1e9b5;
-  }
-  h1 {text-align: center;
-      font-size: 300%;  
-  color: rgb(22, 22, 22); 
-  Font-style: italic;}
-  
-  form {text-align: center;
-  font-size : 150%;
-  color: rgb(79, 216, 235);}
-  
-  div {
-    height: 40%;
-  }
-  input[type="text"]
-  {
-      font-size:100%;
-  }
-  input[type="submit"]
-  {
-      font-size:200%;
-  }
-  </Style></head>  <script>
+<html>
+<!-- BOOTSRAP - Styling -->
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+    crossorigin="anonymous"
+  />
+  <!-- more styling -->
+  <style>
+    div {
+      margin: 10px;
+    }
+    form {
+      border: 1px solid lightgrey;
+      padding: 10px;
+    }
+  </style>
+  <script>
     window.onload = (event) =>{
       
       var sendButton = document.getElementById("myButton");
@@ -39,40 +25,74 @@
         var username = document.getElementById("username").value;
         var message = document.getElementById("message").value;
         var country = document.getElementById("country").value;
-        var date= new date();
         
+        console.log(username);
+        // We create AJAX object which is waiting response
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function(){
           if(this.readyState == 4 && this.status == 200){
+            // Response data will be shown in status field
             document.getElementById("status").innerHTML = this.responseText;
             console.log(this.responseText);
+            // alert(this.responseText);
           };
         };
-        xmlhttp.open("POST","/ajaxmessage", true);
+        xmlhttp.open("POST","/sendAjax", true);
         xmlhttp.setRequestHeader(
           "Content-type",
           "application/x-www-form-urlencoded"
         );
-        xmlhttp.send("username=" + username + "message=" + message + "country=" + country + "date=" + date);
+        xmlhttp.send("username=" + username + "&message=" + message + "&country=" + country);
         
       });
     };
     </script>
   <body>
+    <body>
       <a href="/" class="active">Home</a>
       <a href="/guestbook">Guestbook</a>
       <a href="/newmessage">Leave a greeting</a>
       <a href="/ajaxmessage">Ajax message</a>
-  <div></div>
-  <h1>Leave a message to the shops!</h1>
-  <form method="post" action="/ajaxmessage.html">
-      Username <input type="text" name="username" required>
-      Country <input type="text" name="country"required>
-      Message <input type="text" name="message"required>
-  <div>
-  <br>
-  <input type="submit" value="Send">
+    <div>
+      <form  method="POST" action="/sendAjax">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input
+            type="username"
+            class="form-control"
+            id="username"
+            aria-describedby="username"
+            placeholder="Enter username"
+            name="username" 
+          />
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+           <input
+            type="message"
+            class="form-control"
+            id="message"
+            placeholder="message"
+            name="message"
+          />
+        </div>
+        <div class="form-group">
+          <label for="exampleCountry">Country</label>
+           <input
+            type="country"
+            class="form-control"
+            id="country"
+            placeholder="Country"
+            name="country"
+          />
+        </div>
+        <button type="button" id="myButton" class="btn btn-primary">
+          Send
+        </button>
+        <div id="status" class="form-group"></div>
+      </form>
+    </div>
+    
   
-  </div>
-  </form>
   </body>
+</html>
